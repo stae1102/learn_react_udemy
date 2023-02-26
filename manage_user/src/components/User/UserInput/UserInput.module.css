@@ -1,0 +1,19 @@
+.new-user__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.new-user__control label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.new-user__control input {
+  font: inherit;
+  padding: 0.5rem;
+  width: 20rem;
+  max-width: 100%;
+}
