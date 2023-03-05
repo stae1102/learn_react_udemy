@@ -2,6 +2,13 @@ import { useReducer } from 'react';
 import CartContext from './cart-context';
 
 const cartReducer = (state, action) => {
+  if (action.type === 'ADD') {
+    const updatedItems = state.items.concat(action.item);
+    const totalAmount = state.totalAmount + action.item.price * action.item.amount;
+
+    return { items: updatedItems, totalAmount };
+  }
+
   return defaultCartState;
 };
 
