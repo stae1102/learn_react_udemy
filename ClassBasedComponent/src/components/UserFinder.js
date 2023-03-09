@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, Component } from 'react';
+import { Fragment, Component } from 'react';
 
 import Users from './Users';
 
@@ -17,6 +17,13 @@ class UserFinder extends Component {
       filteredUsers: DUMMY_USERS,
       searchTerm: '',
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchTerm !== this.state.searchTerm) {
+      const filteredUsers = DUMMY_USERS.filter((user) => user.name.includes(this.state.searchTerm));
+      this.setState({ filteredUsers });
+    }
   }
 
   searchChangeHandler(event) {
