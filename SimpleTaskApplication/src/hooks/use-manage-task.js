@@ -4,6 +4,14 @@ const useManageTask = (method = 'GET', taskHandler) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  if (method === 'GET') {
+    throw new Error('GET method not supported!');
+  }
+
+  if (method === 'POST' && !taskHandler) {
+    throw new Error('taskHandler not provided!');
+  }
+
   const enterTaskHandler = async (taskText) => {
     setIsLoading(true);
     setError(null);
