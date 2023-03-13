@@ -14,12 +14,6 @@ const useHttp = (requestConfig, applyData) => {
         body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,
       });
 
-      console.log(requestConfig.method ?? 'GET');
-      console.log(requestConfig.headers ?? {});
-      console.log(requestConfig.body ? JSON.stringify(requestConfig.body) : null);
-
-      console.log(response);
-
       if (!response.ok) {
         throw new Error('Request failed!');
       }
