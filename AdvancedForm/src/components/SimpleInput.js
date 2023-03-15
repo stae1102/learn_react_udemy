@@ -7,11 +7,11 @@ const SimpleInput = (props) => {
   const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
   const enteredNameIsValid = enteredName.trim() !== '';
-  const enteredEmailIsValid = enteredEmail.trim() !== '';
+  const enteredEmailIsValid = enteredEmail.includes('@');
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
   const emailInputIsInvalid = !enteredEmailIsValid && enteredEmailTouched;
 
-  const formIsValid = enteredNameIsValid;
+  const formIsValid = enteredNameIsValid && enteredEmailIsValid;
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
