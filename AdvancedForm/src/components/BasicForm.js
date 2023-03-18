@@ -4,7 +4,6 @@ import useInput from '../hooks/use-form-input';
 const BasicForm = (props) => {
   const {
     value: enteredFirstName,
-    isTouched: firstNameIsTouched,
     hasError: firstNameHasError,
     isValid: firstNameIsValid,
     valueChangeHandler: firstNameChangeHandler,
@@ -13,7 +12,6 @@ const BasicForm = (props) => {
   } = useInput((value) => value.trim() !== '');
   const {
     value: enteredLastName,
-    isTouched: lastNameIsTouched,
     hasError: lastNameHasError,
     isValid: lastNameIsValid,
     valueChangeHandler: lastNameChangeHandler,
@@ -22,7 +20,6 @@ const BasicForm = (props) => {
   } = useInput((value) => value.trim() !== '');
   const {
     value: enteredEmail,
-    isTouched: emailIsTouched,
     hasError: emailHasError,
     isValid: emailIsValid,
     valueChangeHandler: emailChangeHandler,
@@ -77,7 +74,7 @@ const BasicForm = (props) => {
       <div className={emailClasses}>
         <label htmlFor='name'>E-Mail Address</label>
         <input type='text' id='name' value={enteredEmail} onChange={emailChangeHandler} onBlur={emailBlurHandler} />
-        {emailHasError && emailIsTouched && <p className='error-text'>Email is needed.</p>}
+        {emailHasError && <p className='error-text'>Email is needed.</p>}
       </div>
       <div className='form-actions'>
         <button disabled={!formIsValid}>Submit</button>
