@@ -11,7 +11,7 @@ const Input = (validateValue) => {
     setEnteredValue(event.target.value);
   };
 
-  const inputBlurHandler = () => {
+  const valudBlurHandler = () => {
     setIsTouched(true);
   };
 
@@ -22,11 +22,11 @@ const Input = (validateValue) => {
 
   return {
     value: enteredValue,
-    isTouched,
     hasError,
+    isTouched,
     isValid: valueIsValid,
     valueChangeHandler,
-    inputBlurHandler,
+    valudBlurHandler,
     reset,
   };
 };
