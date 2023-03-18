@@ -22,8 +22,8 @@ const Input = (validateValue) => {
 
   return {
     value: enteredValue,
-    isTouched,
     hasError,
+    isTouched,
     isValid: valueIsValid,
     valueChangeHandler,
     inputBlurHandler,
