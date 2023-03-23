@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
@@ -7,12 +7,16 @@ import Products from './components/Shop/Products';
 
 import { useSelector } from 'react-redux';
 import { uiActions } from './store/ui-slice';
+import Notification from './components/UI/Notification';
+
+let isInitial = true;
 
 function App() {
   const dispatch = useDispatch();
 
   const showCart = useSelector((state) => state.ui.cartIsVisible);
   const myCart = useSelector((state) => state.myCart);
+  const myNotification = useSelector((state) => state.ui.notification);
 
   useEffect(() => {
     if (myCart.items.length === 0) {
@@ -27,7 +31,7 @@ function App() {
         })
       );
 
-      const response = fetch(
+      const response = await fetch(
         'https://react-http-10279-default-rtdb.firebaseio.com/cart.json',
         {
           method: 'PUT',
@@ -48,6 +52,11 @@ function App() {
       );
     };
 
+    if (isInitial) {
+      isInitial = false;
+      return;
+    }
+
     sendCartData().catch((error) => {
       dispatch(
         uiActions.showNotification({
@@ -60,10 +69,13 @@ function App() {
   }, [myCart, dispatch]);
 
   return (
-    <Layout>
-      {showCart && <Cart />}
-      <Products />
-    </Layout>
+    <Fragment>
+      {myNotification && <Notification {...myNotification} />}
+      <Layout>
+        {showCart && <Cart />}
+        <Products />
+      </Layout>
+    </Fragment>
   );
 }
 
