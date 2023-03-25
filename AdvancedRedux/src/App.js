@@ -29,6 +29,10 @@ function App() {
       return;
     }
 
+    if (myCart.changed) {
+      dispatch(sendCartData(myCart));
+    }
+
     dispatch(sendCartData(myCart));
   }, [myCart, dispatch]);
 

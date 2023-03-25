@@ -19,7 +19,12 @@ export const fetchCartData = () => {
 
     try {
       const cartData = await fetchData();
-      dispatch(myCartActions.replaceCart(cartData));
+      dispatch(
+        myCartActions.replaceCart({
+          itmes: cartData.items || [],
+          totalQuantity: cartData.totalQuantity,
+        })
+      );
     } catch (error) {
       uiActions.showNotification({
         status: 'error',
@@ -40,12 +45,17 @@ export const sendCartData = (myCart) => {
       })
     );
 
+    console.log('sending data:', myCart);
+
     const sendRequest = async () => {
       const response = await fetch(
         'https://react-http-10279-default-rtdb.firebaseio.com/cart.json',
         {
           method: 'PUT',
-          body: JSON.stringify(myCart),
+          body: JSON.stringify({
+            items: myCart.items,
+            totalQuantity: myCart.totalQuantity,
+          }),
         }
       );
 
