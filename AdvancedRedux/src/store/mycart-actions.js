@@ -21,7 +21,7 @@ export const fetchCartData = () => {
       const cartData = await fetchData();
       dispatch(
         myCartActions.replaceCart({
-          itmes: cartData.items || [],
+          items: cartData.items || [],
           totalQuantity: cartData.totalQuantity,
         })
       );
@@ -44,8 +44,6 @@ export const sendCartData = (myCart) => {
         message: 'Sending cart data!',
       })
     );
-
-    console.log('sending data:', myCart);
 
     const sendRequest = async () => {
       const response = await fetch(
