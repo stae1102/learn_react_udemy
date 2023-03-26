@@ -45,8 +45,6 @@ const myCartSlice = createSlice({
   },
 });
 
-console.log(myCartSlice);
-
 export const myCartActions = myCartSlice.actions;
 
 export default myCartSlice;
