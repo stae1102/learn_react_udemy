@@ -1,28 +1,70 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+import { useParams } from 'react-router-dom';
 
 import classes from './MainNavigation.module.css';
 
 function MainNavigation() {
+  const params = useParams();
+
   return (
     <header className={classes.header}>
       <nav>
         <ul className={classes.list}>
           <li>
-            <Link to='/' end>
+            <NavLink
+              to='/'
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+              end
+            >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to='events'>Events</Link>
+            <NavLink
+              to='events'
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+              end
+            >
+              Events
+            </NavLink>
           </li>
           <li>
-            <Link to='events/1'>Event Detail</Link>
+            <NavLink
+              to='events/1'
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+              end={params}
+            >
+              Event Detail
+            </NavLink>
           </li>
           <li>
-            <Link to='events/new'>Add new Event</Link>
+            <NavLink
+              to='events/new'
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+              end='new'
+            >
+              Add new Event
+            </NavLink>
           </li>
           <li>
-            <Link to='events/1/edit'>Edit Event</Link>
+            <NavLink
+              to='events/1/edit'
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+              end='edit'
+            >
+              Edit Event
+            </NavLink>
           </li>
         </ul>
       </nav>
