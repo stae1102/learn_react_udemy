@@ -17,7 +17,7 @@ const EventsPage = () => {
       <h1>My Events Page!</h1>
       <ul>
         {DUMMY_EVENTS.map((event) => (
-          <li>
+          <li key={event.id}>
             <Link to={event.id} relative='route'>
               {event.title}
             </Link>
