@@ -26,11 +26,12 @@ import EventsPage from './components/pages/EventsPage';
 import EventDetailPage from './components/pages/EventDetailPage';
 import NewEventPage from './components/pages/NewEventPage';
 import EditEventPage from './components/pages/EditEventPage';
+import RootLayout from './components/pages/Root';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    // element: <Homepage />,
+    element: <RootLayout />,
     children: [
       { index: true, element: <Homepage /> },
       { path: 'events', element: <EventsPage /> },
