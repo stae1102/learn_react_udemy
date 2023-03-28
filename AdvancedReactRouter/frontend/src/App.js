@@ -27,7 +27,7 @@ import EventDetailPage from './pages/EventDetail';
 import NewEventPage from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
 import RootLayout from './components/layout/Root';
-import EventLayout from './components/layout/Event';
+import EventLayout from './components/layout/EventsRoot';
 
 const router = createBrowserRouter([
   {
