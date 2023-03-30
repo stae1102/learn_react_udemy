@@ -1,12 +1,9 @@
 import { NavLink } from 'react-router-dom';
 
-import { useParams } from 'react-router-dom';
-
 import classes from './MainNavigation.module.css';
+import NewsletterSignup from './NewsletterSignup';
 
 function MainNavigation() {
-  const params = useParams();
-
   return (
     <header className={classes.header}>
       <nav>
@@ -24,50 +21,27 @@ function MainNavigation() {
           </li>
           <li>
             <NavLink
-              to='events'
+              to='/events'
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
-              end
             >
               Events
             </NavLink>
           </li>
           <li>
             <NavLink
-              to='events/1'
+              to='/newsletter'
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
-              end={params}
             >
-              Event Detail
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='events/new'
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
-              end='new'
-            >
-              Add new Event
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='events/1/edit'
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
-              end='edit'
-            >
-              Edit Event
+              Newsletter
             </NavLink>
           </li>
         </ul>
       </nav>
+      <NewsletterSignup />
     </header>
   );
 }
