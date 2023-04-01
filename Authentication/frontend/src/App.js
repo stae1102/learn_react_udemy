@@ -9,6 +9,7 @@ import EventDetailPage, {
 import EventsPage, { loader as eventsLoader } from './pages/Events';
 import EventsRootLayout from './pages/EventsRoot';
 import HomePage from './pages/Home';
+import AuthenticationPage from './pages/Authentication';
 import NewEventPage from './pages/NewEvent';
 import RootLayout from './pages/Root';
 import { action as manipulateEventAction } from './components/EventForm';
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      { path: 'auth', element: <AuthenticationPage /> },
       {
         path: 'newsletter',
         element: <NewsletterPage />,
