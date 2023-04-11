@@ -7,6 +7,15 @@ let actions = {};
 export const useStore = () => {
   const setState = useState(globalState)[1];
 
+  const dispatch = (actionIdentifier) => {
+    const newState = actions[actionIdentifier](globalState);
+    globalState = { ...globalState, ...newState };
+
+    for (const listener of listeners) {
+      listener(globalState);
+    }
+  };
+
   useEffect(() => {
     listeners.push(setState);
 
@@ -14,4 +23,13 @@ export const useStore = () => {
       listeners = listeners.filter((listener) => listener !== setState);
     };
   }, []);
+
+  return [globalState, dispatch];
+};
+
+export const initStore = (userActions, initialState) => {
+  if (initialState) {
+    globalState = { ...globalState, ...initialState };
+  }
+  actions = { ...actions, ...userActions };
 };
