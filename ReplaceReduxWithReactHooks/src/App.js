@@ -1,21 +1,21 @@
 import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import Navigation from './components/Nav/Navigation';
 import ProductsPage from './containers/Products';
 import FavoritesPage from './containers/Favorites';
+import RootLayout from './pages/Root';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigation />,
+    element: <RootLayout />,
     children: [
       {
         index: true,
         element: <ProductsPage />,
       },
       {
-        path: '/favorites',
+        path: 'favorites',
         element: <FavoritesPage />,
       },
     ],
