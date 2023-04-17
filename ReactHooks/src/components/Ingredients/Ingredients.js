@@ -30,6 +30,10 @@ const Ingredients = () => {
     fetchIngredients();
   }, []);
 
+  const filteredIngredientsHandler = (filteredIngredients) => {
+    setUserIngredients(filteredIngredients);
+  };
+
   const addIngredientHandler = async (ingredient) => {
     const response = await fetch(
       'https://react-http-10279-default-rtdb.firebaseio.com/ingredients.json',
@@ -58,7 +62,7 @@ const Ingredients = () => {
       <IngredientForm onAddIngredient={addIngredientHandler} />
 
       <section>
-        <Search />
+        <Search onLoadIngredients={filteredIngredientsHandler} />
         <IngredientList
           ingredients={userIngredients}
           onRemoveItem={removeIngredientHandler}
