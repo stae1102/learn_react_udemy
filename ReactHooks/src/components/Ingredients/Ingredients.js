@@ -50,7 +50,13 @@ const Ingredients = () => {
     ]);
   };
 
-  const removeIngredientHandler = (ingredientId) => {
+  const removeIngredientHandler = async (ingredientId) => {
+    await fetch(
+      `https://react-http-10279-default-rtdb.firebaseio.com/ingredients/${ingredientId}.json`,
+      {
+        method: 'DELETE',
+      }
+    );
     const updatedIngredients = userIngredients.filter(
       (ingredient) => ingredient.id !== ingredientId
     );
