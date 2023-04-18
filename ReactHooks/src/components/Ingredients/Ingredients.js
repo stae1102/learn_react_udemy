@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
@@ -7,10 +7,46 @@ import Search from './Search';
 const Ingredients = () => {
   const [userIngredients, setUserIngredients] = useState([]);
 
-  const addIngredientHandler = (ingredient) => {
+  useEffect(() => {
+    const loadedIngredients = [];
+
+    const fetchIngredients = async () => {
+      const response = await fetch(
+        'https://react-http-10279-default-rtdb.firebaseio.com/ingredients.json'
+      );
+      const responseData = await response.json();
+
+      for (const key in responseData) {
+        loadedIngredients.push({
+          id: key,
+          title: responseData[key].title,
+          amount: responseData[key].amount,
+        });
+      }
+
+      setUserIngredients(loadedIngredients);
+    };
+
+    fetchIngredients();
+  }, []);
+
+  const filteredIngredientsHandler = useCallback((filteredIngredients) => {
+    setUserIngredients(filteredIngredients);
+  }, []);
+
+  const addIngredientHandler = async (ingredient) => {
+    const response = await fetch(
+      'https://react-http-10279-default-rtdb.firebaseio.com/ingredients.json',
+      {
+        method: 'POST',
+        body: JSON.stringify(ingredient),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    const responseData = await response.json();
     setUserIngredients((prevIngredients) => [
       ...prevIngredients,
-      { id: Math.random().toString(), ...ingredient },
+      { id: responseData.name, ...ingredient },
     ]);
   };
 
@@ -26,7 +62,7 @@ const Ingredients = () => {
       <IngredientForm onAddIngredient={addIngredientHandler} />
 
       <section>
-        <Search />
+        <Search onLoadIngredients={filteredIngredientsHandler} />
         <IngredientList
           ingredients={userIngredients}
           onRemoveItem={removeIngredientHandler}
