@@ -96,9 +96,9 @@ const Ingredients = () => {
     }
   }, []);
 
-  const clearError = () => {
+  const clearError = useCallback(() => {
     dispatchHttpState({ type: 'CLEAR' });
-  };
+  }, []);
 
   const ingredientList = useMemo(() => {
     <IngredientList
@@ -116,7 +116,6 @@ const Ingredients = () => {
         onAddIngredient={addIngredientHandler}
         loading={isLoading}
       />
-
       <section>
         <Search onLoadIngredients={filteredIngredientsHandler} />
         {ingredientList}
