@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useCallback } from 'react';
 
 const httpReducer = (httpState, action) => {
   switch (action.type) {
@@ -22,7 +22,7 @@ const useHttp = (url, method, body) => {
     data: null,
   });
 
-  const sendRequest = async () => {
+  const sendRequest = useCallback(async () => {
     dispatchHttpState({ type: 'SEND' });
 
     try {
@@ -41,12 +41,13 @@ const useHttp = (url, method, body) => {
         errorMessage: 'Something went wrong!',
       });
     }
-  };
+  }, [url, method, body]);
 
   return {
     isLoading: httpState.isLoading,
     data: httpState.data,
     error: httpState.error,
+    sendRequest,
   };
 };
 
