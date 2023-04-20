@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState, useMemo } from 'react';
+import React, { useCallback, useReducer, useEffect, useMemo } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
@@ -24,19 +24,42 @@ const Ingredients = () => {
     ingredientReducer,
     []
   );
-  const { isLoading, error, data, sendRequest } = useHttp();
+  const { isLoading, error, data, sendRequest, reqExtra, reqIdentifier } =
+    useHttp();
+
+  useEffect(() => {
+    if (!isLoading && !error && reqIdentifier === 'REMOVE_INGREDIENT') {
+      dispatchUserIngredients({ type: 'DELETE', id: reqExtra });
+    } else if (!isLoading && !error && reqIdentifier === 'ADD_INGREDIENT') {
+      dispatchUserIngredients({
+        type: 'ADD',
+        ingredient: { id: data.name, ...reqExtra },
+      });
+    }
+  }, [data, reqExtra, reqIdentifier, isLoading, error]);
 
   const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     dispatchUserIngredients({ type: 'SET', ingredients: filteredIngredients });
   }, []);
 
-  const addIngredientHandler = useCallback(async (ingredient) => {}, []);
+  const addIngredientHandler = useCallback(async (ingredient) => {
+    sendRequest(
+      'https://react-http-10279-default-rtdb.firebaseio.com/ingredients.json',
+      'POST',
+      JSON.stringify(ingredient),
+      ingredient,
+      'ADD_INGREDIENT'
+    );
+  }, []);
 
   const removeIngredientHandler = useCallback(
     async (ingredientId) => {
       sendRequest(
         `https://react-http-10279-default-rtdb.firebaseio.com/ingredients/${ingredientId}.json`,
-        'DELETE'
+        'DELETE',
+        null,
+        ingredientId,
+        'REMOVE_INGREDIENT'
       );
     },
     [sendRequest]
