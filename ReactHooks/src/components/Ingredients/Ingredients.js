@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useReducer, useState, useMemo } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
@@ -43,7 +43,6 @@ const Ingredients = () => {
     error: null,
   });
 
-  // const [userIngredients, setUserIngredients] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
@@ -51,7 +50,7 @@ const Ingredients = () => {
     dispatchUserIngredients({ type: 'SET', ingredients: filteredIngredients });
   }, []);
 
-  const addIngredientHandler = async (ingredient) => {
+  const addIngredientHandler = useCallback(async (ingredient) => {
     dispatchHttpState({ type: 'SEND' });
     try {
       const response = await fetch(
@@ -64,10 +63,7 @@ const Ingredients = () => {
       );
       dispatchHttpState({ type: 'RESPONSE' });
       const responseData = await response.json();
-      // setUserIngredients((prevIngredients) => [
-      //   ...prevIngredients,
-      //   { id: responseData.name, ...ingredient },
-      // ]);
+
       dispatchUserIngredients({
         type: 'ADD',
         ingredient: { id: responseData.name, ...ingredient },
@@ -78,9 +74,9 @@ const Ingredients = () => {
         errorMessage: 'Something went wrong!',
       });
     }
-  };
+  }, []);
 
-  const removeIngredientHandler = async (ingredientId) => {
+  const removeIngredientHandler = useCallback(async (ingredientId) => {
     dispatchHttpState({ type: 'SEND' });
     try {
       await fetch(
@@ -90,10 +86,7 @@ const Ingredients = () => {
         }
       );
       dispatchHttpState({ type: 'RESPONSE' });
-      // const updatedIngredients = userIngredients.filter(
-      //   (ingredient) => ingredient.id !== ingredientId
-      // );
-      // setUserIngredients(updatedIngredients);
+
       dispatchUserIngredients({ type: 'DELETE', id: ingredientId });
     } catch (error) {
       dispatchHttpState({
@@ -101,11 +94,18 @@ const Ingredients = () => {
         errorMessage: 'Something went wrong!',
       });
     }
-  };
+  }, []);
 
   const clearError = () => {
     dispatchHttpState({ type: 'CLEAR' });
   };
+
+  const ingredientList = useMemo(() => {
+    <IngredientList
+      ingredients={userIngredients}
+      onRemoveItem={removeIngredientHandler}
+    />;
+  }, [userIngredients, removeIngredientHandler]);
 
   return (
     <div className='App'>
@@ -119,10 +119,7 @@ const Ingredients = () => {
 
       <section>
         <Search onLoadIngredients={filteredIngredientsHandler} />
-        <IngredientList
-          ingredients={userIngredients}
-          onRemoveItem={removeIngredientHandler}
-        />
+        {ingredientList}
       </section>
     </div>
   );
