@@ -65,13 +65,13 @@ const Ingredients = () => {
     [sendRequest]
   );
 
-  const clearError = useCallback(() => {}, []);
-
   const ingredientList = useMemo(() => {
+    return (
     <IngredientList
       ingredients={userIngredients}
       onRemoveItem={removeIngredientHandler}
-    />;
+      />
+    );
   }, [userIngredients, removeIngredientHandler]);
 
   return (
