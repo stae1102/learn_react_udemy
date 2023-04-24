@@ -1,3 +1,4 @@
+import NewPost from './NewPost';
 import Post from './Post';
 import classes from './PostList.module.css';
 
@@ -6,7 +7,12 @@ const PostList = (props) => {
     <Post author={post.author} body={post.body} />
   ));
 
-  return <ul className={classes.posts}>{posts}</ul>;
+  return (
+    <>
+      <NewPost />
+      <ul className={classes.posts}>{posts}</ul>
+    </>
+  );
 };
 
 export default PostList;
