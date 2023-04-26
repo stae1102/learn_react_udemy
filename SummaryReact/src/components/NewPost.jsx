@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import classes from './NewPost.module.css';
 
 function NewPost({ onCancel }) {
@@ -12,8 +13,18 @@ function NewPost({ onCancel }) {
   const authorChangeHandler = (event) => {
     setEnteredAuthor(event.target.value);
   };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    const postData = {
+      body: enteredBody,
+      author: enteredAuthor,
+    };
+    onCancel();
+  };
+
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={submitHandler}>
       <p>
         <label htmlFor='body'>Text</label>
         <textarea id='body' required rows={3} onChange={bodyChangeHandler} />
