@@ -21,10 +21,7 @@ const PostList = ({ isPosting, onStopPosting }) => {
     <>
       {isPosting && (
         <Modal onClose={onStopPosting}>
-          <NewPost
-            onBodyChange={bodyChangeHandler}
-            onAuthorChange={authorChangeHandler}
-          />
+          <NewPost onCancel={onStopPosting} />
         </Modal>
       )}
       <ul className={classes.posts}>
