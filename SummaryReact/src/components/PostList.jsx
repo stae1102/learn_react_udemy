@@ -7,7 +7,7 @@ const PostList = () => {
   const posts = useLoaderData();
 
   const postContents = posts.map((post) => (
-    <Post key={post.body} author={post.author} body={post.body} />
+    <Post key={post.body} id={post.id} author={post.author} body={post.body} />
   ));
 
   return (
